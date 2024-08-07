@@ -1,13 +1,10 @@
-<%@page import="java.util.Base64"%>
-<%@page import="com.jsp.hotel_management_system.dto.Hotel"%>
-<%@page import="com.jsp.hotel_management_system.admin.dao.HotelDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>hotel-edit-owner</title>
+<title>user-registration</title>
 <!-- Font Awesome -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -47,20 +44,9 @@
 </head>
 <body>
 
-
 	<%
 		String msg = (String)request.getAttribute("msg");
-	
-		int id = Integer.parseInt(request.getParameter("id"));
-		
-		Hotel hotel=new HotelDao().fetchHotelByIdDao(id);
-		
-		byte[] image = hotel.getImage();
-		
-		String encodeImage = Base64.getEncoder().encodeToString(image);
 	%>
-
-	<jsp:include page="hotel-owner-navbar.jsp"></jsp:include>
 	<section class="vh-100 bg-image"
 		style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
 		<div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -70,43 +56,33 @@
 					<div class="col-12 col-md-9 col-lg-7 col-xl-6">
 						<div class="card" style="border-radius: 15px;">
 							<div class="card-body p-5">
-								<h2 class="text-uppercase text-center mb-5">UPDATE-HOTEL-DETAILS</h2>
+								<h2 class="text-uppercase text-center mb-5">UserRegister</h2>
 
 								<%if(msg!=null) {%> <h3><%=msg%></h3><%}%>
-								<form action="hotelUpdate" method="post"  enctype="multipart/form-data">
+								<form action="userRegister" method="post">
 									
 									<div data-mdb-input-init class="form-outline mb-4">
-									
 										<input type="text" id="form3Example1cg"
-											class="form-control form-control-lg"  name="id" value="<%=hotel.getId()%>" hidden="true"/> <label
-											class="form-label" for="form3Example1cg">Hotel Id</label>
-									
-										<input type="text" id="form3Example1cg"
-											class="form-control form-control-lg" value="<%=hotel.getName()%>" name="name"/> <label
-											class="form-label" for="form3Example1cg">Hotel Name</label>
+											class="form-control form-control-lg" name="name"/> <label
+											class="form-label" for="form3Example1cg">UserName</label>
 									</div>
 
 									<div data-mdb-input-init class="form-outline mb-4">
 										<input type="text" id="form3Example3cg"
-											class="form-control form-control-lg" name="city" value="<%=hotel.getCity()%>"/> <label
-											class="form-label" for="form3Example3cg">Hotel City</label>
+											class="form-control form-control-lg" name="email" /> <label
+											class="form-label" for="form3Example3cg">User Email</label>
 									</div>
 
 									<div data-mdb-input-init class="form-outline mb-4">
-										<input type="text" id="form3Example4cg"
-											class="form-control form-control-lg" name="address" value="<%=hotel.getAddress()%>"/> <label
-											class="form-label" for="form3Example4cg">Hotel Address</label>
+										<input type="password" id="form3Example4cg"
+											class="form-control form-control-lg" name="password"/> <label
+											class="form-label" for="form3Example4cg">UserPassword</label>
 									</div>
 
 									<div data-mdb-input-init class="form-outline mb-4">
 										<input type="tel" id="form3Example4cdg"
-											class="form-control form-control-lg" name="price" value="<%=hotel.getPrice()%>"/> <label
-											class="form-label" for="form3Example4cdg">Hotel Price</label>
-									</div>
-									
-									<div data-mdb-input-init class="form-outline mb-4">
-										<input type="file" id="form3Example4cdg"
-											class="form-control form-control-lg" name="image"/>
+											class="form-control form-control-lg" name="phone"/> <label
+											class="form-label" for="form3Example4cdg">UserPhone</label>
 									</div>
 
 									<div class="form-check d-flex justify-content-center mb-5">
@@ -120,7 +96,7 @@
 									<div class="d-flex justify-content-center">
 										<button type="submit" data-mdb-button-init
 											data-mdb-ripple-init
-											class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">UPDATE</button>
+											class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">register</button>
 									</div>
 
 								</form>

@@ -10,22 +10,23 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
 
 public class HotelDao {
-	@PersistenceContext
-	EntityManager em = Persistence.createEntityManagerFactory("hotelProject").createEntityManager();
+
+	EntityManager em = Persistence.createEntityManagerFactory("hotel-project").createEntityManager();
+
 	EntityTransaction et = em.getTransaction();
-	public Hotel saveHotelDao(Hotel hotel){
+
+	public Hotel saveHotelDao(Hotel hotel) {
 		try {
 			et.begin();
-			
 			em.persist(hotel);
 			et.commit();
 			return hotel;
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			return null;
 		}
 	}
+
 	/*
 	 * 
 	 * getAllHotelDetails
@@ -33,6 +34,18 @@ public class HotelDao {
 	 */
 	public List<Hotel> getAllHotelDetailsDao() {
 		return em.createQuery("FROM Hotel").getResultList();
+	}
+	
+	/*
+	 * 
+	 * getAllHotelDetailsonlyverified
+	 * 
+	 */
+	public List<Hotel> getAllVerifiedHotelDetailsDao() {
+		
+		List<Hotel> hotels=em.createQuery("FROM Hotel").getResultList();
+
+		return hotels.stream().filter(a->a.getVerifyStatus().equalsIgnoreCase("yes")).toList();
 	}
 
 	/*
@@ -77,30 +90,28 @@ public class HotelDao {
 		}
 		
 	}
-/**
- * 
- * 
- * @param id
- * @return hotel
- * fetch hotel by id 
- */
+	
+	/**
+	 * 
+	 * @param id
+	 * @return Hotel
+	 * 
+	 * fetch hotel by id
+	 */
 	public Hotel fetchHotelByIdDao(int id) {
 		
 		return em.find(Hotel.class, id);
 	}
 	
-	
-	/**
-	 * 
-	 * 
-	verify hotel by id 
+	/*
+	 * verifyHotelByAdmin
 	 */
 	public Hotel verifyHotelByAdminDao(Hotel hotel) {
+		
 		et.begin();
 		em.merge(hotel);
 		et.commit();
+		
 		return hotel;
 	}
-	
-	
 }
